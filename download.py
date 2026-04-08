@@ -109,9 +109,14 @@ def download(url: str, out_dir: Path, session: requests.Session) -> bool:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Download files from a URL list")
     parser.add_argument("urls_file", type=Path, help="Text file with one URL per line")
-    parser.add_argument("--out", type=Path, default=Path("downloads"),
+    parser.add_argument("out_dir", type=Path, nargs="?", default=None,
+                        help="Output directory (positional, optional)")
+    parser.add_argument("--out", type=Path, default=None,
                         metavar="DIR", help="Output directory (default: ./downloads)")
     args = parser.parse_args()
+
+    # Accept output dir as either a positional arg or --out flag
+    args.out = args.out_dir or args.out or Path("downloads")
 
     if not args.urls_file.exists():
         sys.exit(f"File not found: {args.urls_file}")
