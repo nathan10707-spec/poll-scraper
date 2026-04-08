@@ -11,7 +11,7 @@ Usage:
 
 Requirements:
     pip install -r requirements.txt
-    playwright install chromium
+    python -m playwright install chromium
 """
 
 import argparse
